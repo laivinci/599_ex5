@@ -6,7 +6,7 @@
   "scripts": {
     "start": "nodemon -e css,ejs,js,json --watch app"
   },
-  "author": "Anselm Spoerri (building on Ray Villalobos' code",
+  "author": "Wen-Chi (building on Anselm Spoerri's code)",
   "license": "MIT",
   "dependencies": {
     "ejs": "^2.4.2",

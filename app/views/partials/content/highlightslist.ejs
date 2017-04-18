@@ -1,0 +1,86 @@
+<article class="highlightslist <% if (pageID == 'home') { %>jumbotron hidden-xs<% } %>">
+  <div class="container">
+    <div class="row">
+      <% highlights.forEach(function(item) { %>
+
+        <div class="<% if (pageID == 'home') { %>col-xs-12 col-sm-6 col-md-4 col-lg-3 text-center<% } else { %>col-sm-12 <% } %>">
+          <h3 class="highlightslist-title"><%= item.site %></h3>
+          <h5 class="highlightslist-name"><a href="/highlights/<%= item.id %>"></a></h5>
+          <div class="highlightslist-info">
+            <a href="/highlights/<%= item.id %>">
+              <% if (pageID == 'home') { %>
+                <img class="highlightslist-img img-circle" src="<%= item.image %>" alt="Photo of <%= item.site %>" width="300px">
+                <% } %></a>
+
+                <% if (pageID == 'highlightsList') { %>
+                  <div class="container" style="width:850px;">
+                    <div class="row">
+                      <div class="col-xs-12 col-sm-12 col-md-6">
+                        <img class="highlightslist-img img-circle pull-left" src="<%= item.image %>" alt="Photo of <%= item.site %>">
+                      </div>
+                      <div class="col-xs-12 col-sm-12 col-md-6">
+                        <iframe width="400px" height="300px" src="<%= item.videoEmbed %>">
+                        </iframe>
+                      </div>
+                    </div>
+                  </div>
+                  <p style="font-weight:bold;"><%= item.category %></p>
+                  <% } %>
+
+                  <% if (pageID == 'highlightDetail') { %>
+                    <img class="highlightslist-img img-responsive pull-left" src="<%= item.image %>" alt="Photo of <%= item.site %>" width="800px">
+                    <% } %>
+
+                    <% if (pageID !== 'home') { %>
+                      <% if (pageID == 'highlightsList') { %>
+                        <!-- <%- item.info %> -->
+                        <% } else { %>
+                          <div style="clear: both; margin:10px;"><%- item.info %>
+                          </div>
+                          <div class="container" style="width:850px;">
+                            <div class="row">
+                              <div class="col-md-6">
+                                <!-- put into video code -->
+                                <iframe width="400px" height="300px" src="<%= item.videoEmbed %>">
+                                </iframe>
+                              </div>
+                              <div  id="map<%= item.id %>" class="col-md-6" style="width:400px; height:300px;">
+                              </div>
+                              <script>
+                              function initMap() {
+                                var centerPos ={lat:46.788911, lng:8.284089};
+                                var map1 = new google.maps.Map(document.getElementById('map<%= item.id %>'), {
+                                  center: centerPos,
+                                  zoom: 7,
+                                  mapTypeId: google.maps.MapTypeId.ROADMAP,
+                                  draggable: true
+                                });
+                                var marker1Pos = {lat: <%- item.lat -%>, lng: <%- item.long -%>};
+                                var marker = new google.maps.Marker({
+                                  position:marker1Pos,
+                                  map:map1,
+                                  title:'<%= item.site %>'
+                                });
+                                marker.addListener('click', function() {
+                                  var infoWindow = new google.maps.InfoWindow ({
+                                    content: '<%= item.category %>',
+                                    maxwidth: 400
+                                  });
+                                  infoWindow.open(map1, marker);
+                                });
+                              }
+                              </script>
+                              <script async defer
+                              src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC6vf7EnMXeH1l39OvuHn9DwFFlO9RHxGM&callback=initMap">
+                              </script>
+                            </div> <!--row -->
+                          </div> <!--container -->
+                          <% } %>
+                          <% } %>
+
+                        </div> <!-- info -->
+                      </div>  <!-- home -->
+                      <%  }); %>
+                    </div><!-- row -->
+                  </div><!-- container -->
+                </article>
